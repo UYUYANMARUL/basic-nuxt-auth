@@ -46,6 +46,7 @@ const phone = {phone:route.query.phone}
   function OnSubmit(data) {
     $http.Post("/auth/phone-login-validate",{body:data,onResponse:(err)=>{$ResponseHandler.response(err)}}).then(
       ()=>{
+        $auth.login(res)
         $inforoute.route(true,"/","Login Completed We Are Routing You Main Page",ToastrMessageType.Success,ToastrPosition.TopCenter)
       },
       ()=>{
