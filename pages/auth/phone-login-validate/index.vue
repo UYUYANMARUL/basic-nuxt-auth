@@ -37,7 +37,7 @@
     
      
   
-  const {$FormValidation,$http,$inforoute,$ResponseHandler} = useNuxtApp()
+  const {$FormValidation,$http,$inforoute,$ResponseHandler,$auth} = useNuxtApp()
 const route = useRoute()
 
     const Submitted = ref(false)
