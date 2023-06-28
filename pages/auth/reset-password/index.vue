@@ -34,10 +34,10 @@
     
     <script setup>
   import { UserResetPasswordFormV } from '~/validation/UserResetPasswordFormV';
-  
+  import { ToastrPosition,ToastrMessageType } from '~/plugins/notification';
     
   
-  const {$FormValidation,$toast} = useNuxtApp()
+  const {$FormValidation,$ResponseHandler,$http,$inforoute} = useNuxtApp()
     
   const route = useRoute()
   const Submitted = ref(false)

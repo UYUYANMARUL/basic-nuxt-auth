@@ -28,7 +28,7 @@
     
     <script setup>
   import { UserResendVerificationEmailFormV } from '~/validation/UserResendVerificationEmailFormV';
-  
+  import { ToastrPosition,ToastrMessageType } from '~/plugins/notification';
     
      
   
