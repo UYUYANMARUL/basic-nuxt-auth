@@ -104,16 +104,21 @@ method:
       runtimeConfig.public.baseURL ||
       "https://api.mahmoudzadehjewellery.com/v1";
 
-    const header = new Headers();
-    const jwtToken = localStorage.getItem("access-token");
+    const headers = new Headers();
+    const jwt = localStorage.getItem("access-token");
 
-    if (jwtToken) header.append("Authorization", `Bearer ${jwtToken}`);
+    if (jwt) headers.append("Authorization", `Bearer ${jwt}`);
+
+    if (!(options.body instanceof FormData)) {
+      options.body = JSON.stringify(options.body);
+      headers.append("Content-Type", "application/json");
+    }
 
     path = `${BaseUrl}${path.startsWith("/") ? "" : "/"}${path}`;
     console.log(path);
     return await $fetch(path.toString(), {
       method: options.method,
-      headers: header,
+      headers: headers,
       body: options.body || undefined,
       params: options.params || undefined,
       query: options.query || undefined,
