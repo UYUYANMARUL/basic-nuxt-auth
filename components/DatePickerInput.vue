@@ -18,7 +18,10 @@ const dpRef = ref();
 const onClickOutside = () => {
   errorcondition.value=true
   if (dpRef.value) dpRef.value.closeMenu();
+
 }
+
+
 
 
 const props = defineProps({
@@ -53,6 +56,13 @@ type:Boolean,
 default:false
 }
 })
+
+
+
+
+
+
+
 const emit = defineEmits(["update:modelValue", "validate"])
 
 
@@ -61,6 +71,8 @@ const model = computed({
 get: () => props.modelValue,
 set: (value) => emit("update:modelValue", value),
 })
+
+
 
 
 </script>

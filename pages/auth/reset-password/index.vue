@@ -48,7 +48,7 @@
   function OnSubmit(data) {
 
     $http.Post("/auth/reset-password",{body:data,onResponse:(res)=>{$ResponseHandler.response(res)}}).then(()=>{
-      $inforoute.route("/auth/login","Password Changed We Are Routing You Login Page",ToastrMessageType.Success,ToastrPosition.TopCenter)
+      $inforoute.route(true,"/auth/login","Password Changed We Are Routing You Login Page",ToastrMessageType.Success,ToastrPosition.TopCenter)
   },()=>{Submitted.value=false})
   
   }

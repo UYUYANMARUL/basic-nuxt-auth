@@ -31,6 +31,12 @@
                 </span>
                 <NuxtLink to="/auth/register" class="font-light text-md text-indigo-600 underline font-semibold hover:text-indigo-800">Sign In</NuxtLink>
             </div>
+            <div class="text-center mt-6">
+                <span>
+                    Did you Forgot password?
+                </span>
+                <NuxtLink to="/auth/forgot-password" class="font-light text-md text-indigo-600 underline font-semibold hover:text-indigo-800">Reset Password</NuxtLink>
+            </div>
         </div>
     </div>
 

@@ -41,7 +41,7 @@
   function OnSubmit(data) {
     $http.Post(`/auth/resend-verification-email?email=${data.email}`,{body:data,onResponse:(res)=>{$ResponseHandler.response(res)}}).then(
       ()=>{
-        $inforoute.route("/auth/login","Verification Email Send",ToastrMessageType.Success,ToastrPosition.TopCenter)
+        $inforoute.route(true,"/auth/login","Verification Email Send",ToastrMessageType.Success,ToastrPosition.TopCenter)
       },
       ()=>{
         Submitted.value=false

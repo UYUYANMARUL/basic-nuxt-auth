@@ -6,7 +6,7 @@ Email onaylaniyor
     </template>
     
     <script setup>
-import { ToastrMessageType } from '~/plugins/notification';
+  import { ToastrPosition,ToastrMessageType } from '~/plugins/notification';
 
 const {$http,$ResponseHandler,$inforoute} = useNuxtApp()
 const route = useRoute()
@@ -18,9 +18,9 @@ form.append("token",data)
 $http.Post("/auth/verify-email",{body:form,onResponse:(res)=>{
     $ResponseHandler.response(res)
 }}).then(()=>{
-    $inforoute.route("/auth/login","Email Successfully Confirmed")
+    $inforoute.route(true,"/auth/login","Email Successfully Confirmed")
 },
-()=>{ $inforoute.route("/","Email Cant Confirmed",ToastrMessageType.Error)}
+()=>{ $inforoute.route(false,"/","Email Cant Confirmed",ToastrMessageType.Error)}
 )
 
     </script>

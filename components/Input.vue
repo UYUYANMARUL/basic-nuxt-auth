@@ -1,6 +1,8 @@
 <template>
+                
                 <div class="py-2 text-left">
-                    <input @focusout="errorcondition=true" @blur="errorcondition=true" v-model="model"  :type="props.type" :disabled="props.disabled" :name="props.name" class="bg-gray-200 border-2 border-gray-100 focus:outline-none bg-gray-100 block w-full py-2 px-4 rounded-lg focus:border-gray-700 " :placeholder=Placeholder />
+                  <label v-if="props.label" :for="props.name" class="ml-32"> {{ props.label }}</label>
+                    <input @focusout="errorcondition=true" @blur="errorcondition=true" v-model="model"  :type="props.type" :disabled="props.disabled" :name="props.name" class="bg-gray-200 border-2 border-gray-100 focus:outline-none bg-gray-100 block w-full py-2 px-4 mt-4 rounded-lg focus:border-gray-700 " :placeholder=Placeholder />
                 </div>
                 <div v-if="errorcondition || props.submiterror" v-for="(item, index) in errors" :key="index">
                   {{ item }}

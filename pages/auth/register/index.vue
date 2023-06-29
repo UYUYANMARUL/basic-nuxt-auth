@@ -6,8 +6,8 @@
 
     <div class="flex flex-1 items-center justify-center mt-16">
           <div class="rounded-lg sm:border-2 px-4 lg:px-20 py-16 lg:max-w-xl sm:max-w-md w-full text-center">
-            <Form class="text-center" :Submitted="Submitted" @Submit="(data)=>{OnSubmit(data)}" @FailedSubmit="Submitted=false" :FormV="UserRegisterFormV">
-                <template #default={form,submiterror}>
+            <Form class="text-center" :Submitted="Submitted" @Submit="(data)=>{OnSubmit(data)}" @FailedSubmit="Submitted=false" :FormV="UserRegisterFormV" :Pipes="pipes" :FormType="false">
+                <template #default={form,submiterror,Pipes}>
                   <h1 class="font-bold tracking-wider text-3xl mb-8 w-full text-gray-600">
                   Sign Up
                   </h1>
@@ -30,13 +30,13 @@
                     <Input v-model="form.password_confirmation" type="password" name="password_confirmation" :errors="$FormValidation.GetFieldErrors(form.password_confirmation,UserRegisterFormV.shape.password_confirmation)" Placeholder="Password Confirmation" :submiterror="submiterror"/>
                   </div>
                   <div class="py-2 text-left">
-                    <Input v-model="form.gender" type="text" name="gender" :errors="$FormValidation.GetFieldErrors(form.gender,UserRegisterFormV.shape.gender)" Placeholder="Gender" :submiterror="submiterror"/>
+                    <SelectBox v-model="form.gender" type="text" name="gender" :errors="$FormValidation.GetFieldErrors(form.gender,UserRegisterFormV.shape.gender)" Placeholder="Gender" :submiterror="submiterror" :options="gender"/>
                   </div>
                   <div class="py-2 text-left">
                     <DatePickerInput v-model="form.birthday" :errors="$FormValidation.GetFieldErrors(form.birthday,UserRegisterFormV.shape.birthday)" :submiterror="submiterror"/>
                   </div>
                   <div class="py-2 text-left">
-                    <Input v-model="form.is_whatsapp" type="checkbox" name="is_whatsapp" :errors="$FormValidation.GetFieldErrors(form.is_whatsapp,UserRegisterFormV.shape.is_whatsapp)" Placeholder="is_whatsapp" :submiterror="submiterror"/>
+                    <Input label="Do you have whatsapp" v-model="form.is_whatsapp" type="checkbox" name="is_whatsapp" :errors="$FormValidation.GetFieldErrors(form.is_whatsapp,UserRegisterFormV.shape.is_whatsapp)" Placeholder="is_whatsapp" :submiterror="submiterror"/>
                   </div>
 
                 </template>
@@ -71,9 +71,11 @@ import { UserLoginFormV } from '~/validation/UserLoginFormV';
   
 
 
-  
+  const gender = ["female","male"]
   const {$FormValidation,$http,$notify,$ResponseHandler,$inforoute} = useNuxtApp()
   const router = useRouter();
+  const pipes = {"birthday":(value)=>{return `${value.getDate()}.${value.getMonth() + 1}.${value.getFullYear()}`},"is_whatsapp":(value)=>{return value == "true" ? true : false}}
+
 
   const Submitted = ref(false)
      
@@ -81,7 +83,7 @@ import { UserLoginFormV } from '~/validation/UserLoginFormV';
 
 
     $http.Post("/auth/register",{body:data,onResponse:(err)=>{$ResponseHandler.response(err)}}).then(()=>{
-      $inforoute.route("/auth/login","Register Completed We Are Routing You",ToastrMessageType.Success,ToastrPosition.TopCenter)
+      $inforoute.route(true,"/auth/login","Register Completed We Are Routing You",ToastrMessageType.Success,ToastrPosition.TopCenter)
   },()=>{Submitted.value=false})
   
   }
