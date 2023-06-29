@@ -75,6 +75,7 @@ function test() {
 
 
 function submit() {
+  console.log('test')
 
 
 if (disabled.value == true) {

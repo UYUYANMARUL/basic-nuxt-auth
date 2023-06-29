@@ -37,7 +37,7 @@
   import { ToastrPosition,ToastrMessageType } from '~/plugins/notification';
     
   
-  const {$FormValidation,$ResponseHandler,$http,$inforoute} = useNuxtApp()
+  const {$FormValidation,$ErrorHandler,$http,$inforoute} = useNuxtApp()
     
   const route = useRoute()
   const Submitted = ref(false)
@@ -47,7 +47,7 @@
   
   function OnSubmit(data) {
 
-    $http.Post("/auth/reset-password",{body:data,onResponse:(res)=>{$ResponseHandler.response(res)}}).then(()=>{
+    $http.Post("/auth/reset-password",{body:data,onResponseError:(res)=>{$ErrorHandler.responseError(res)}}).then(()=>{
       $inforoute.route(true,"/auth/login","Password Changed We Are Routing You Login Page",ToastrMessageType.Success,ToastrPosition.TopCenter)
   },()=>{Submitted.value=false})
   

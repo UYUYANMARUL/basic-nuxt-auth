@@ -39,11 +39,11 @@ import { UserForgotPasswordFormV } from '~/validation/UserForgotPasswordFormV';
     
      
   
-  const {$FormValidation,$http,$notify,$ResponseHandler,$inforoute} = useNuxtApp()
+  const {$FormValidation,$http,$notify,$ErrorHandler,$inforoute} = useNuxtApp()
     
   
   function OnSubmit(data) {
-    $http.Post("/auth/forgot-password",{body:data,onResponse:(res)=>{$ResponseHandler.response(res)}}).then(()=>{
+    $http.Post("/auth/forgot-password",{body:data,onResponseError:(res)=>{$ErrorHandler.responseError(res)}}).then(()=>{
       $inforoute.route(true,"/auth/login","Password reset email sent We Are Routing You Main Login Page",ToastrMessageType.Success,ToastrPosition.TopCenter)
     },
     ()=>{

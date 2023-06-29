@@ -42,7 +42,7 @@
                 </template>
                 <template v-slot:button>
                   <div class="py-2">
-                      <button  @click="Submitted=true" type="submit" class="border-2 border-gray-100 focus:outline-none bg-purple-600 text-white font-bold tracking-wider block w-full p-2 rounded-lg focus:border-gray-700 hover:bg-purple-700">
+                      <button  @click="console.log('hi')" type="submit" class="border-2 border-gray-100 focus:outline-none bg-purple-600 text-white font-bold tracking-wider block w-full p-2 rounded-lg focus:border-gray-700 hover:bg-purple-700">
                       Sign Up
                       </button>
                   </div>
@@ -59,7 +59,7 @@
           </div>
       </div>
   
-  
+  {{ data }}
     </template>
     
     <script setup>
@@ -69,10 +69,14 @@
   import { ToastrPosition,ToastrMessageType } from '~/plugins/notification';
 import { UserLoginFormV } from '~/validation/UserLoginFormV';
   
+ const data = ref("sa")
 
+ setTimeout(() => {
+  data.value = "hi"
+ }, 2000);
 
   const gender = ["female","male"]
-  const {$FormValidation,$http,$notify,$ResponseHandler,$inforoute} = useNuxtApp()
+  const {$FormValidation,$http,$notify,$ErrorHandler,$inforoute} = useNuxtApp()
   const router = useRouter();
   const pipes = {"birthday":(value)=>{return `${value.getDate()}.${value.getMonth() + 1}.${value.getFullYear()}`},"is_whatsapp":(value)=>{return value == "true" ? true : false}}
 
@@ -82,7 +86,7 @@ import { UserLoginFormV } from '~/validation/UserLoginFormV';
   function OnSubmit(data) {
 
 
-    $http.Post("/auth/register",{body:data,onResponse:(err)=>{$ResponseHandler.response(err)}}).then(()=>{
+    $http.Post("/auth/register",{body:data,onResponseError:(err)=>{$ErrorHandler.responseError(err)}}).then(()=>{
       $inforoute.route(true,"/auth/login","Register Completed We Are Routing You",ToastrMessageType.Success,ToastrPosition.TopCenter)
   },()=>{Submitted.value=false})
   

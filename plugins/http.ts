@@ -115,7 +115,6 @@ method:
     }
 
     path = `${BaseUrl}${path.startsWith("/") ? "" : "/"}${path}`;
-    console.log(path);
     return await $fetch(path.toString(), {
       method: options.method,
       headers: headers,

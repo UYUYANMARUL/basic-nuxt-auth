@@ -3,15 +3,9 @@ import { ToastrPosition, ToastrMessageType } from "./notification";
 export default defineNuxtPlugin((nuxtApp) => {
   const app = useNuxtApp();
 
-  function response(res: any) {
+  function responseError(res: any) {
     const data = res.response._data;
-    if (data.success) {
-      // app.$notify(data.message, "Success", {
-      //   timeOut: 5000,
-      //   position: ToastrPosition.TopRight,
-      //   messageType: ToastrMessageType.Success,
-      // });
-    } else {
+    if (!data.success) {
       app.$notify(data.message, "There Are Error", {
         timeOut: 5000,
         position: ToastrPosition.TopRight,
@@ -22,8 +16,8 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   return {
     provide: {
-      ResponseHandler: {
-        response,
+      ErrorHandler: {
+        responseError,
       },
     },
   };

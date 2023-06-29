@@ -33,14 +33,14 @@
     
      
   
-  const {$FormValidation,$http,$ResponseHandler,$inforoute} = useNuxtApp()
+  const {$FormValidation,$http,$ErrorHandler,$inforoute} = useNuxtApp()
     
      
 
   const Submitted = ref(false)
 
   function OnSubmit(data) {
-    $http.Post("/auth/phone-login",{body:data,onResponse:(res)=>{$ResponseHandler.response(res)}}).then(
+    $http.Post("/auth/phone-login",{body:data,onResponseError:(res)=>{$ErrorHandler.responseError(res)}}).then(
       ()=>{
         $inforoute.route(false,`/auth/phone-login-validate?phone=${data.get("phone")}`,"",ToastrMessageType.Success,ToastrPosition.TopCenter,"",1)
       },

@@ -32,14 +32,14 @@
     
      
   
-  const {$FormValidation,$http,$ResponseHandler,$inforoute} = useNuxtApp()
+  const {$FormValidation,$http,$ErrorHandler,$inforoute} = useNuxtApp()
     
      
 
-  const Submitted = ref(false)
+  const Submitted = ref(false);
 
   function OnSubmit(data) {
-    $http.Post(`/auth/resend-verification-email?email=${data.email}`,{body:data,onResponse:(res)=>{$ResponseHandler.response(res)}}).then(
+    $http.Post(`/auth/resend-verification-email?email=${data.email}`,{body:data,onResponseError:(res)=>{$ErrorHandler.responseError(res)}}).then(
       ()=>{
         $inforoute.route(true,"/auth/login","Verification Email Send",ToastrMessageType.Success,ToastrPosition.TopCenter)
       },

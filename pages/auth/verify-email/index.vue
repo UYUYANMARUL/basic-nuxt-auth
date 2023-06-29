@@ -8,15 +8,15 @@ Email onaylaniyor
     <script setup>
   import { ToastrPosition,ToastrMessageType } from '~/plugins/notification';
 
-const {$http,$ResponseHandler,$inforoute} = useNuxtApp()
+const {$http,$ErrorHandler,$inforoute} = useNuxtApp()
 const route = useRoute()
 const router = useRouter()
 const data = route.query.token
 const form = new FormData()
 
 form.append("token",data)
-$http.Post("/auth/verify-email",{body:form,onResponse:(res)=>{
-    $ResponseHandler.response(res)
+$http.Post("/auth/verify-email",{body:form,onResponseError:(res)=>{
+    $ErrorHandler.responseError(res)
 }}).then(()=>{
     $inforoute.route(true,"/auth/login","Email Successfully Confirmed")
 },

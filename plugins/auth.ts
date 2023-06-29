@@ -1,18 +1,24 @@
 import useAccountStore from "@/stores/accountinfo";
 import { ToastrPosition, ToastrMessageType } from "./notification";
+import { useAuthStore } from "~/stores/authinfo";
 
 export default defineNuxtPlugin((nuxtApp) => {
   const app = useNuxtApp();
   const accountstore = useAccountStore();
+  const authstore = useAuthStore();
 
-  function login(res: any) {
-    localStorage.setItem("access-token", res.data.access_token);
+  async function login(res: any) {
     accountstore.setAccount(res.data);
+    authstore.SetAccessToken(res.data.access_token);
   }
 
   function logout(res: any) {
-    localStorage.removeItem("access-token");
+    const accesstoken = useCookie("access-token");
+    accesstoken.value = "";
+    accountstore.setAccount({});
   }
+
+  async function getcredentials() {}
 
   return {
     provide: {

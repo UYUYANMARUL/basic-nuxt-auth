@@ -52,17 +52,15 @@ import { UserLoginFormV } from '~/validation/UserLoginFormV';
 
 
   
-  const {$FormValidation,$http,$auth,$ResponseHandler,$inforoute} = useNuxtApp()
+  const {$FormValidation,$http,$auth,$ErrorHandler,$inforoute} = useNuxtApp()
 
 
   const Submitted = ref(false)
      
   function OnSubmit(data) {
 
-    $http.Post("/auth/login",{body:data,onResponse:(res)=>{$ResponseHandler.response(res)}}).then((res)=>{
-      $auth.login(res)
-      $inforoute.route(true,"/","Login Completed We Are Routing You Main Page",ToastrMessageType.Success,ToastrPosition.TopCenter)
-    
+    $http.Post("/auth/login",{body:data,onResponseError:(res)=>{$ErrorHandler.responseError(res)}}).then((res)=>{
+      $auth.login(res).then(()=>{$inforoute.route(true,"/","Login Completed We Are Routing You Main Page",ToastrMessageType.Success,ToastrPosition.TopCenter)})
     },()=>{
       Submitted.value=false
     })
